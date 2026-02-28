@@ -1,1 +1,7 @@
-# Vesuvius-Challenge
+# Vesuvius Surface Detection – 3D Scroll Segmentation
+
+###vesuvius_surface_segmentation.py
+**Though this notebook did not give a score as 'Notebook Threw Exception' but this was in the best model I could have designed in the limited time **
+This project implements a deep learning pipeline for detecting surface regions within volumetric scroll data from the Vesuvius Challenge dataset. The system trains a 3D-aware segmentation model using stacked z-slices as multi-channel inputs and applies a U-Net architecture with a pretrained ResNet34 encoder adapted for volumetric data. Large TIFF volumes are processed using a sliding-window tiling strategy that enables training and inference on high-resolution scans within GPU memory constraints. The pipeline includes percentile-based normalization, data augmentation through spatial flipping, class-weighted loss to address severe label imbalance, and mixed-precision training for efficient GPU utilization.
+
+During inference, the model predicts voxel-level probabilities across entire volumes by aggregating overlapping patch predictions, producing a smooth probability map for surface detection. A threshold optimization step selects the best binary segmentation cutoff using F1-score evaluation against known labels, after which predictions are generated for test volumes and exported as compressed TIFF masks packaged into a competition-ready submission file. The workflow is designed to be reproducible in offline Kaggle environments and demonstrates an end-to-end approach to large-scale 3D semantic segmentation, combining efficient data handling, pretrained feature extraction, and sliding-window reconstruction for volumetric analysis tasks.
